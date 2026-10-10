@@ -1,0 +1,1101 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#FBF3E3" media="(prefers-color-scheme:light)">
+<meta name="theme-color" content="#15171F" media="(prefers-color-scheme:dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="香港三日">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<title>香港三日兩夜</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chocolate+Classical+Sans&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* Layout: 茶餐廳 menu board. One column, fixed top bar, 小巴牌 as the recurring sign motif,
+   night-street neon hero on a milk-tea paper page. */
+:root{
+  --bg:#FBF3E3;        /* 絲襪奶茶 奶白 */
+  --paper:#FFFFFF;
+  --ink:#1E1A18;       /* 墨黑 */
+  --ink-2:#6E5B4D;     /* 奶茶啡 */
+  --line:#1E1A18;
+  --red:#D7312E;       /* 小巴紅 */
+  --blue:#2458A6;      /* 小巴藍 */
+  --yellow:#F6C244;    /* 蛋撻黃 */
+  --green:#2E7D5B;     /* 叮叮綠 */
+  --pink:#E8449A;      /* 霓虹粉 */
+  --cyan:#36B5BF;      /* 霓虹青 */
+  --night:#121A33;     /* 霓虹夜街 */
+  --night-2:#1E2A52;
+  --soft:#F3E6CF;
+  --shadow:0 4px 0 var(--ink);
+  --display:'Chocolate Classical Sans','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+  --body:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+  --r:18px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15171F; --paper:#222633; --ink:#F4EDE0; --ink-2:#C3B6A6; --line:#F4EDE0;
+    --soft:#2B3042; --night:#0B1024; --night-2:#16204A; --shadow:0 4px 0 #000;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15171F; --paper:#222633; --ink:#F4EDE0; --ink-2:#C3B6A6; --line:#F4EDE0;
+  --soft:#2B3042; --night:#0B1024; --night-2:#16204A; --shadow:0 4px 0 #000;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0;font-family:var(--display);font-weight:400;line-height:1.2;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:720px;margin:0 auto;padding-inline:16px}
+
+/* 頂端固定選單 */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--paper);border-bottom:3px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.topbar .wrap{display:flex;align-items:center;gap:8px;height:56px;overflow-x:auto;scrollbar-width:none}
+.topbar .wrap::-webkit-scrollbar{display:none}
+.brand{font-family:var(--display);font-size:22px;white-space:nowrap;padding-right:6px;color:var(--red);letter-spacing:.04em}
+.brand b{color:var(--blue);font-weight:400}
+.topbar nav{display:flex;gap:6px;margin-left:auto}
+.topbar nav a{white-space:nowrap;text-decoration:none;font-size:14px;font-weight:700;padding:5px 11px;border:2px solid var(--line);border-radius:999px;background:var(--paper);transition:transform .15s,background .15s}
+.topbar nav a:hover,.topbar nav a:focus-visible{background:var(--yellow);transform:translateY(-1px);outline:none}
+main{padding-top:calc(56px + env(safe-area-inset-top,0px))}
+section{padding-block:40px 8px}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.sec-head h2{font-size:30px}
+.sec-head .eyebrow{font-size:12px;letter-spacing:.14em;color:var(--ink-2);font-weight:700;text-transform:uppercase}
+.sec-head svg{flex:none}
+
+/* 小巴牌 */
+.plate{display:inline-flex;align-items:center;gap:8px;background:var(--paper);border:3px solid var(--line);border-radius:12px;padding:4px 12px;font-family:var(--display);box-shadow:var(--shadow);line-height:1.1}
+.plate .r{color:var(--red)} .plate .b{color:var(--blue)}
+
+/* 首頁 */
+.hero{padding-top:20px}
+.hero-card{background:var(--night);border:3px solid var(--line);border-radius:26px;overflow:hidden;box-shadow:var(--shadow);color:#FFF6E6;position:relative}
+.hero-art{display:block;width:100%;height:auto;max-width:100%}
+.hero-body{padding:8px 20px 22px;text-align:center;position:relative}
+.neon{font-family:var(--display);font-size:clamp(44px,12vw,76px);color:#FFE7F3;letter-spacing:.06em;text-shadow:0 0 6px #fff,0 0 14px var(--pink),0 0 30px var(--pink),0 0 48px var(--pink);animation:flicker 6s infinite}
+.neon-sub{font-family:var(--display);font-size:clamp(20px,5vw,28px);color:#DFFBFF;letter-spacing:.2em;text-shadow:0 0 6px #fff,0 0 14px var(--cyan),0 0 28px var(--cyan);margin-top:-4px}
+.hero-dates{margin-top:14px;display:flex;justify-content:center;flex-wrap:wrap;gap:8px}
+.hero-dates .plate{font-size:18px}
+.hero-dates .plate .b{font-size:14px;font-family:var(--body);font-weight:700;color:var(--ink-2)}
+.countdown{margin-top:18px;display:flex;justify-content:center;gap:10px;align-items:stretch}
+.cd{background:var(--paper);color:var(--ink);border:3px solid var(--line);border-radius:14px;min-width:72px;padding:8px 6px 6px;box-shadow:var(--shadow)}
+.cd .n{font-family:var(--display);font-size:38px;color:var(--red);line-height:1;font-variant-numeric:tabular-nums}
+.cd .l{font-size:12px;font-weight:700;color:var(--ink-2);letter-spacing:.1em}
+.cd-note{margin-top:10px;font-size:13px;color:#C9D4EA}
+
+/* 航班卡片 */
+.people{display:grid;gap:16px}
+.pcard{background:var(--paper);border:3px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.pcard-head{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:3px solid var(--line)}
+.pcard-head h3{font-size:24px}
+.pcard-head .who{margin-left:auto}
+.legs{display:grid}
+.leg{display:grid;grid-template-columns:1fr auto 1fr;gap:8px 10px;padding:14px 16px;align-items:center}
+.leg + .leg{border-top:2px dashed var(--line)}
+.leg .ap{font-family:var(--display);font-size:28px;line-height:1}
+.leg .tm{font-size:22px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.1;margin-top:2px}
+.leg .nm{font-size:12px;color:var(--ink-2);font-weight:700}
+.leg .to{text-align:right}
+.leg .mid{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:700;color:var(--ink-2);min-width:84px}
+.leg .mid .line{width:100%;height:0;border-top:3px dotted var(--line);position:relative;margin:4px 0}
+.leg .mid svg{display:block}
+.leg .meta{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;font-size:12px;font-weight:700}
+.leg .meta span{background:var(--soft);border:2px solid var(--line);border-radius:999px;padding:2px 10px}
+.leg .meta .no{background:var(--yellow);color:#1E1A18}
+.leg .date{font-size:12px;color:var(--ink-2);font-weight:700;grid-column:1/-1;margin-bottom:-6px}
+
+/* 標籤 */
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:900;padding:2px 9px;border-radius:999px;border:2px solid var(--line);line-height:1.5;white-space:nowrap}
+.who-me{background:var(--pink);color:#fff;border-color:var(--pink)}
+.who-fr{background:var(--cyan);color:#102026;border-color:var(--cyan)}
+.who-all{background:var(--yellow);color:#1E1A18;border-color:var(--yellow)}
+.tr-mtr{background:#C8102E;color:#fff;border-color:#C8102E}
+.tr-bus{background:var(--blue);color:#fff;border-color:var(--blue)}
+.tr-taxi{background:#F2C94C;color:#1E1A18;border-color:#1E1A18}
+.tr-ferry{background:var(--green);color:#fff;border-color:var(--green)}
+.tr-tram{background:#1B8A8F;color:#fff;border-color:#1B8A8F}
+.tr-walk{background:var(--paper);color:var(--ink)}
+.tr-train{background:#1F3F8F;color:#fff;border-color:#1F3F8F}
+.tr-plane{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.must{background:var(--red);color:#fff;border-color:var(--red)}
+
+/* 每日行程 */
+.daytabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.daytab{background:var(--paper);border:3px solid var(--line);border-radius:14px;padding:8px 6px 10px;box-shadow:var(--shadow);text-align:center;transition:transform .15s,background .15s}
+.daytab .d{font-family:var(--display);font-size:26px;color:var(--red);line-height:1}
+.daytab .w{font-family:var(--display);font-size:16px;color:var(--blue);margin-top:2px}
+.daytab .k{font-size:11px;font-weight:700;color:var(--ink-2);margin-top:4px}
+.daytab:hover{transform:translateY(-2px)}
+.daytab[aria-selected="true"]{background:var(--yellow);color:#1E1A18;animation:bounce .45s cubic-bezier(.3,1.6,.5,1)}
+.daytab[aria-selected="true"] .k{color:#5A4A2E}
+.daytab:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.filter{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px;font-size:13px;font-weight:700;color:var(--ink-2)}
+.filter button{border:2px solid var(--line);background:var(--paper);border-radius:999px;padding:4px 12px;font-weight:900;font-size:13px}
+.filter button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.day-title{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin-bottom:14px}
+.day-title h3{font-size:26px}
+.day-title p{color:var(--ink-2);font-size:14px;font-weight:700}
+.tl{list-style:none;margin:0;padding:0 0 0 2px;position:relative}
+.tl::before{content:"";position:absolute;left:66px;top:6px;bottom:6px;border-left:3px dashed var(--line);opacity:.5}
+.ev{display:grid;grid-template-columns:52px 1fr;gap:0 26px;padding:8px 0;position:relative;animation:rise .4s both}
+.ev .t{font-size:16px;font-weight:900;font-variant-numeric:tabular-nums;text-align:right;padding-top:12px;line-height:1}
+.ev .dot{position:absolute;left:59px;top:17px;width:16px;height:16px;border-radius:50%;border:3px solid var(--line);background:var(--yellow)}
+.ev[data-who="me"] .dot{background:var(--pink)}
+.ev[data-who="friend"] .dot{background:var(--cyan)}
+.ev .card{background:var(--paper);border:3px solid var(--line);border-radius:16px;padding:10px 14px 12px;box-shadow:var(--shadow);min-width:0}
+.ev .tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px}
+.ev h4{font-size:20px;line-height:1.25}
+.ev p{font-size:14px;color:var(--ink-2);margin-top:4px}
+.ev .alt{margin-top:6px;font-size:13px;color:var(--ink);background:var(--soft);border-radius:8px;padding:4px 8px}
+.ev .alt b{color:var(--blue);font-weight:900}
+.ev .links{margin-top:6px;font-size:13px;font-weight:700}
+/* 備選口袋名單 */
+.opt-group{margin-bottom:16px}
+.opt-group h3{font-size:20px;display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.opt-group h3 .fit{font-family:var(--body);font-size:12px;font-weight:900;color:var(--ink-2);background:var(--soft);border-radius:999px;padding:2px 10px}
+.opt-group .places .place{font-size:13px}
+.place .note{font-size:11px;color:var(--ink-2);font-weight:700}
+.place:hover .note{color:#5A4A2E}
+.place.closed{opacity:.45;text-decoration:line-through}
+.ev .links a{color:var(--blue)}
+.ev.hidden{display:none}
+.tl-empty{color:var(--ink-2);font-weight:700;padding:16px 0}
+.split{display:flex;align-items:center;gap:10px;margin:14px 0 6px;font-family:var(--display);font-size:16px;color:var(--ink-2)}
+.split::before,.split::after{content:"";flex:1;border-top:2px dashed var(--line);opacity:.5}
+
+/* 待辦 */
+.todo{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.todo li{background:var(--paper);border:3px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+.todo label{display:flex;gap:12px;align-items:flex-start;padding:10px 14px;cursor:pointer}
+.todo input{appearance:none;flex:none;width:24px;height:24px;margin-top:2px;border:3px solid var(--line);border-radius:7px;background:var(--paper);display:grid;place-items:center;transition:background .15s}
+.todo input:checked{background:var(--green);border-color:var(--green)}
+.todo input:checked::after{content:"";width:7px;height:12px;border:solid #fff;border-width:0 3px 3px 0;transform:translateY(-2px) rotate(45deg)}
+.todo input:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.todo .tx{font-weight:700;font-size:15px}
+.todo .sub{display:block;font-weight:400;font-size:13px;color:var(--ink-2)}
+.todo input:checked ~ .tx{text-decoration:line-through;color:var(--ink-2)}
+.todo-foot{margin-top:10px;font-size:13px;color:var(--ink-2);font-weight:700;display:flex;justify-content:space-between;align-items:center}
+.todo-foot button{border:2px solid var(--line);background:var(--paper);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:900}
+
+/* 住宿 */
+.stay{background:var(--paper);border:3px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.stay-art{background:var(--soft);border-bottom:3px solid var(--line);padding:10px 16px 0}
+.stay-art svg{display:block;width:100%;height:auto;max-width:100%}
+.stay-body{padding:14px 16px 16px}
+.stay-body h3{font-size:26px}
+.stay-body .en{font-size:13px;color:var(--ink-2);font-weight:700}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin-top:12px;font-size:14px}
+.kv dt{font-weight:900;color:var(--ink-2);white-space:nowrap}
+.kv dd{margin:0;min-width:0}
+.kv code{font-family:var(--body);background:var(--soft);padding:1px 6px;border-radius:6px}
+
+/* 清單 */
+.places{display:flex;flex-wrap:wrap;gap:8px}
+.place{display:inline-flex;align-items:center;gap:6px;text-decoration:none;border:2px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--paper);font-size:14px;font-weight:700;transition:transform .15s}
+.place:hover{transform:translateY(-2px);background:var(--yellow);color:#1E1A18}
+.place .area{font-size:11px;color:var(--ink-2);font-weight:900}
+.place:hover .area{color:#5A4A2E}
+.map-btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;background:var(--blue);color:#fff;border:3px solid var(--line);border-radius:14px;padding:8px 16px;font-weight:900;box-shadow:var(--shadow);margin-bottom:14px}
+footer{padding:40px 0 32px;text-align:center;color:var(--ink-2);font-size:13px;font-weight:700}
+footer .plate{font-size:15px}
+
+/* 記帳 */
+[hidden]{display:none!important}
+.mnote{font-size:13px;color:var(--ink-2);font-weight:700;margin-bottom:14px}
+.mtotal{background:var(--paper);border:3px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px}
+.mt-main{padding:14px 16px 12px;border-bottom:3px solid var(--line);display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 14px}
+.mt-main .lb{width:100%;font-size:12px;font-weight:900;color:var(--ink-2);letter-spacing:.08em}
+.mt-main .big{font-family:var(--display);font-size:40px;line-height:1;color:var(--red);font-variant-numeric:tabular-nums}
+.mt-main .sm{font-size:15px;font-weight:700;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.mt-split{padding:10px 16px 12px;display:grid;gap:6px;font-size:14px}
+.mt-split .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mt-split b{font-variant-numeric:tabular-nums}
+.settle{margin-top:4px;background:var(--yellow);color:#1E1A18;border:2px solid var(--line);border-radius:10px;padding:6px 10px;font-weight:900}
+.mchips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.mchips button{border:2px solid var(--line);background:var(--paper);border-radius:999px;padding:4px 12px;font-weight:900;font-size:13px}
+.mchips button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.mform{background:var(--paper);border:3px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:6px 14px 14px;margin-bottom:18px}
+.mrow{display:grid;grid-template-columns:52px 1fr;align-items:center;gap:10px;padding:8px 0;border-bottom:2px dashed var(--soft)}
+.mrow:last-of-type{border-bottom:0}
+.mrow > span{font-size:13px;font-weight:900;color:var(--ink-2)}
+.mrow input,.mrow select,.mset input,.mset textarea{font:inherit;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:10px;padding:7px 10px;width:100%;min-width:0}
+.mrow input:focus-visible,.mrow select:focus-visible,.mset input:focus-visible,.mset textarea:focus-visible,.seg button:focus-visible,.mbtn:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+#m-amt{font-size:22px;font-weight:900;font-variant-numeric:tabular-nums}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{border:2px solid var(--line);background:var(--paper);border-radius:999px;padding:4px 12px;font-weight:900;font-size:13px}
+.seg button[aria-pressed="true"]{background:var(--blue);color:#fff;border-color:var(--blue)}
+.mbtn{display:block;width:100%;margin-top:12px;border:3px solid var(--line);background:var(--red);color:#fff;border-radius:14px;padding:10px;font-weight:900;font-size:16px;box-shadow:var(--shadow)}
+.mbtn.ghost{background:var(--paper);color:var(--ink);box-shadow:none}
+.mbtn.warn{color:var(--red)}
+.mh{font-family:var(--display);font-size:20px;margin:6px 0 8px}
+.mbrk{display:grid;gap:8px;margin-bottom:18px}
+.mbrk .b{display:grid;grid-template-columns:44px 1fr auto;gap:8px;align-items:center;font-size:13px;font-weight:700}
+.mbrk .bar{height:12px;border:2px solid var(--line);border-radius:999px;background:var(--bg);overflow:hidden}
+.mbrk .bar i{display:block;height:100%;background:var(--cyan)}
+.mbrk .v{font-variant-numeric:tabular-nums}
+.mlist{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:8px}
+.mlist li{background:var(--paper);border:3px solid var(--line);border-radius:14px;padding:8px 12px;display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center}
+.mlist .t{font-weight:900;font-size:15px;min-width:0;overflow-wrap:anywhere}
+.mlist .m{font-size:12px;color:var(--ink-2);font-weight:700;grid-column:1}
+.mlist .a{grid-row:1/3;grid-column:2;text-align:right;font-variant-numeric:tabular-nums}
+.mlist .a b{display:block;font-size:17px}
+.mlist .a small{color:var(--ink-2);font-weight:700}
+.mlist .del{grid-column:1/-1;justify-self:start;border:0;background:none;color:var(--ink-2);font-size:12px;font-weight:900;padding:2px 0;text-decoration:underline}
+.mlist .del.armed{color:var(--red)}
+.mempty{color:var(--ink-2);font-weight:700;padding:8px 0 18px}
+.mset{background:var(--paper);border:3px solid var(--line);border-radius:var(--r);padding:12px 14px 14px;display:grid;gap:10px}
+.mset label{font-size:13px;font-weight:900;color:var(--ink-2)}
+.mset .rate{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-weight:700}
+.mset .rate input{width:90px}
+.mset textarea{min-height:64px;font-size:12px;resize:vertical}
+.mmsg{font-size:13px;font-weight:900;color:var(--green);min-height:1.2em}
+
+/* 動畫 */
+.ferry{animation:bob 4s ease-in-out infinite;transform-origin:center}
+.tram{animation:tram 14s linear infinite}
+.moon{animation:glow 5s ease-in-out infinite}
+.win{animation:blink 3s steps(2) infinite}
+.win.w2{animation-delay:1.1s}.win.w3{animation-delay:2.2s}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(3px) rotate(-1deg)}}
+@keyframes tram{0%{transform:translateX(-120px)}100%{transform:translateX(420px)}}
+@keyframes glow{0%,100%{opacity:.85}50%{opacity:1}}
+@keyframes blink{0%{opacity:1}100%{opacity:.35}}
+@keyframes flicker{0%,93%,100%{opacity:1}94%{opacity:.6}95%{opacity:1}97%{opacity:.7}98%{opacity:1}}
+@keyframes bounce{0%{transform:scale(.92)}60%{transform:scale(1.05)}100%{transform:scale(1)}}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){
+  .ferry,.tram,.moon,.win,.neon,.daytab[aria-selected="true"],.ev{animation:none}
+  .topbar nav a,.daytab,.place,.cd{transition:none}
+}
+@media (min-width:640px){
+  .people{grid-template-columns:1fr 1fr}
+  .tl::before{left:76px}
+  .ev{grid-template-columns:62px 1fr}
+  .ev .dot{left:69px}
+}
+@media (max-width:420px){
+  .leg .ap{font-size:24px}
+  .leg .tm{font-size:19px}
+  .cd{min-width:62px}
+  .cd .n{font-size:32px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">香港<b>三日兩夜</b></div>
+    <nav aria-label="頁面選單">
+      <a href="#home">首頁</a>
+      <a href="#flights">交通</a>
+      <a href="#days">行程</a>
+      <a href="#money">記帳</a>
+      <a href="#todo">清單</a>
+      <a href="#stay">住宿</a>
+      <a href="#list">主清單</a>
+      <a href="#options">Plan B</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- 首頁 -->
+<section id="home" class="hero">
+  <div class="wrap">
+    <div class="hero-card">
+      <svg class="hero-art" viewBox="0 0 360 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="維港夜景、天星小輪與叮叮車插圖">
+        <rect width="360" height="190" fill="#121A33"/>
+        <circle class="moon" cx="300" cy="40" r="16" fill="#F6C244"/>
+        <circle cx="306" cy="36" r="14" fill="#121A33" opacity=".0"/>
+        <g fill="#FFF6E6" opacity=".8">
+          <circle cx="40" cy="30" r="1.5"/><circle cx="90" cy="18" r="1.2"/><circle cx="150" cy="40" r="1.4"/><circle cx="210" cy="22" r="1.2"/><circle cx="250" cy="60" r="1.3"/><circle cx="340" cy="70" r="1.2"/>
+        </g>
+        <!-- 獅子山 -->
+        <path d="M0 120 L40 92 L70 104 L110 78 L150 100 L190 86 L230 104 L270 90 L320 110 L360 98 L360 140 L0 140Z" fill="#1E2A52"/>
+        <!-- 天際線 -->
+        <g stroke="#1E1A18" stroke-width="2.5" stroke-linejoin="round">
+          <rect x="22" y="86" width="26" height="54" fill="#2D3B6B"/>
+          <rect x="56" y="62" width="20" height="78" fill="#3A4A80"/>
+          <rect x="84" y="96" width="30" height="44" fill="#2D3B6B"/>
+          <!-- IFC -->
+          <path d="M126 140 V50 L140 40 L154 50 V140Z" fill="#3A4A80"/>
+          <rect x="164" y="80" width="24" height="60" fill="#2D3B6B"/>
+          <!-- 中銀 -->
+          <path d="M198 140 V72 L212 56 L226 72 V140Z" fill="#3A4A80"/>
+          <path d="M198 72 L226 112 M226 72 L198 112" stroke="#F4EDE0" stroke-width="1.5" opacity=".6" fill="none"/>
+          <rect x="236" y="90" width="28" height="50" fill="#2D3B6B"/>
+          <rect x="272" y="74" width="18" height="66" fill="#3A4A80"/>
+          <rect x="298" y="98" width="40" height="42" fill="#2D3B6B"/>
+        </g>
+        <!-- 窗燈 -->
+        <g fill="#F6C244">
+          <rect class="win" x="28" y="94" width="4" height="5"/><rect class="win w2" x="38" y="104" width="4" height="5"/><rect class="win w3" x="28" y="116" width="4" height="5"/>
+          <rect class="win w2" x="61" y="70" width="4" height="5"/><rect class="win" x="68" y="84" width="4" height="5"/><rect class="win w3" x="61" y="100" width="4" height="5"/><rect class="win" x="68" y="118" width="4" height="5"/>
+          <rect class="win w3" x="92" y="104" width="5" height="5"/><rect class="win" x="104" y="116" width="5" height="5"/>
+          <rect class="win" x="133" y="60" width="4" height="6"/><rect class="win w2" x="143" y="76" width="4" height="6"/><rect class="win w3" x="133" y="94" width="4" height="6"/><rect class="win" x="143" y="112" width="4" height="6"/>
+          <rect class="win w2" x="170" y="90" width="4" height="5"/><rect class="win" x="179" y="108" width="4" height="5"/>
+          <rect class="win w3" x="244" y="100" width="4" height="5"/><rect class="win" x="254" y="118" width="4" height="5"/>
+          <rect class="win" x="278" y="84" width="4" height="5"/><rect class="win w2" x="278" y="104" width="4" height="5"/>
+          <rect class="win w3" x="306" y="108" width="5" height="5"/><rect class="win" x="322" y="120" width="5" height="5"/>
+        </g>
+        <!-- 霓虹招牌 -->
+        <g>
+          <rect x="300" y="78" width="30" height="14" rx="3" fill="#121A33" stroke="#E8449A" stroke-width="2"/>
+          <text x="315" y="89" font-size="9" fill="#FFD6EA" text-anchor="middle" font-family="Chocolate Classical Sans, Noto Sans TC, sans-serif">茶餐廳</text>
+          <rect x="88" y="76" width="22" height="12" rx="3" fill="#121A33" stroke="#36B5BF" stroke-width="2"/>
+          <text x="99" y="85.5" font-size="8" fill="#DFFBFF" text-anchor="middle" font-family="Chocolate Classical Sans, Noto Sans TC, sans-serif">粥麵</text>
+        </g>
+        <!-- 叮叮車 -->
+        <g class="tram">
+          <g transform="translate(0,118)">
+            <rect x="0" y="0" width="52" height="22" rx="4" fill="#2E7D5B" stroke="#1E1A18" stroke-width="2.5"/>
+            <rect x="0" y="-10" width="52" height="12" rx="3" fill="#F4EDE0" stroke="#1E1A18" stroke-width="2.5"/>
+            <g fill="#F6C244"><rect x="6" y="4" width="8" height="8"/><rect x="18" y="4" width="8" height="8"/><rect x="30" y="4" width="8" height="8"/><rect x="42" y="4" width="6" height="8"/></g>
+            <circle cx="12" cy="23" r="4" fill="#1E1A18"/><circle cx="40" cy="23" r="4" fill="#1E1A18"/>
+          </g>
+        </g>
+        <!-- 海 -->
+        <rect x="0" y="140" width="360" height="50" fill="#1F4F8F"/>
+        <g stroke="#9ED3F0" stroke-width="2" fill="none" opacity=".7">
+          <path d="M8 160 q8 -5 16 0 t16 0 t16 0"/><path d="M250 176 q8 -5 16 0 t16 0 t16 0"/><path d="M120 182 q8 -5 16 0 t16 0"/>
+        </g>
+        <!-- 天星小輪 -->
+        <g class="ferry">
+          <g transform="translate(150,146)">
+            <path d="M0 10 L8 24 H92 L100 10Z" fill="#2E7D5B" stroke="#1E1A18" stroke-width="2.5" stroke-linejoin="round"/>
+            <rect x="10" y="-2" width="80" height="12" rx="3" fill="#F4EDE0" stroke="#1E1A18" stroke-width="2.5"/>
+            <rect x="16" y="-12" width="68" height="10" rx="3" fill="#F4EDE0" stroke="#1E1A18" stroke-width="2.5"/>
+            <g fill="#2458A6"><rect x="20" y="1" width="6" height="6"/><rect x="30" y="1" width="6" height="6"/><rect x="40" y="1" width="6" height="6"/><rect x="50" y="1" width="6" height="6"/><rect x="60" y="1" width="6" height="6"/><rect x="70" y="1" width="6" height="6"/></g>
+            <rect x="44" y="-22" width="12" height="10" fill="#D7312E" stroke="#1E1A18" stroke-width="2.5"/>
+            <path d="M50 -22 l0 -6" stroke="#1E1A18" stroke-width="2.5"/>
+            <path d="M50 -28 l10 3 l-10 3Z" fill="#F6C244" stroke="#1E1A18" stroke-width="2"/>
+          </g>
+        </g>
+      </svg>
+      <div class="hero-body">
+        <div class="neon">香港</div>
+        <div class="neon-sub">三日兩夜 · 掃街</div>
+        <div class="hero-dates">
+          <span class="plate"><span class="r">10/23</span><span class="b">五</span></span>
+          <span class="plate"><span class="r">10/24</span><span class="b">六</span></span>
+          <span class="plate"><span class="r">10/25</span><span class="b">日</span></span>
+        </div>
+        <div class="countdown" id="countdown" aria-live="polite">
+          <div class="cd"><div class="n" id="cd-d">—</div><div class="l">日</div></div>
+          <div class="cd"><div class="n" id="cd-h">—</div><div class="l">時</div></div>
+          <div class="cd"><div class="n" id="cd-m">—</div><div class="l">分</div></div>
+        </div>
+        <p class="cd-note" id="cd-note">距離 10/23 出發</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 交通卡片 -->
+<section id="flights">
+  <div class="wrap">
+    <div class="sec-head">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 24 L30 12 L34 14 L22 26 L24 34 L21 34 L17 28 L10 30 L8 28 L13 24Z" fill="#2458A6" stroke="#1E1A18" stroke-width="2.5" stroke-linejoin="round"/><circle cx="31" cy="13" r="2" fill="#F6C244"/></svg>
+      <div><div class="eyebrow">Flights &amp; Rail</div><h2>兩個人的去回程</h2></div>
+    </div>
+    <div class="people">
+      <article class="pcard">
+        <div class="pcard-head">
+          <h3>西卡</h3>
+          <span class="tag who-fr">國泰 CX</span>
+          <span class="who tag tr-plane">台北 ⇄ 香港</span>
+        </div>
+        <div class="legs">
+          <div class="leg">
+            <div class="date">10/23 五 · 去程</div>
+            <div><div class="ap">TPE</div><div class="tm">08:00</div><div class="nm">桃園第一航廈</div></div>
+            <div class="mid"><span>2h 00m</span><div class="line"></div><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M3 13 L16 6 L19 7 L12 14 L13 18 L11 18 L9 15 L5 16 L4 15 L7 13Z" fill="#1E1A18"/></svg></div>
+            <div class="to"><div class="ap">HKG</div><div class="tm">10:00</div><div class="nm">香港第一航廈</div></div>
+            <div class="meta"><span class="no">CX407</span><span>A330-300</span><span>經濟艙 L</span></div>
+          </div>
+          <div class="leg">
+            <div class="date">10/25 日 · 回程</div>
+            <div><div class="ap">HKG</div><div class="tm">19:35</div><div class="nm">香港第一航廈</div></div>
+            <div class="mid"><span>1h 45m</span><div class="line"></div><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M3 13 L16 6 L19 7 L12 14 L13 18 L11 18 L9 15 L5 16 L4 15 L7 13Z" fill="#1E1A18"/></svg></div>
+            <div class="to"><div class="ap">TPE</div><div class="tm">21:20</div><div class="nm">桃園第一航廈</div></div>
+            <div class="meta"><span class="no">CX464</span><span>A321neo</span><span>經濟艙 V</span></div>
+          </div>
+        </div>
+      </article>
+      <article class="pcard">
+        <div class="pcard-head">
+          <h3>JW</h3>
+          <span class="tag who-me">高鐵 + 華航</span>
+          <span class="who tag tr-train">廣州 → 香港 → 台北</span>
+        </div>
+        <div class="legs">
+          <div class="leg">
+            <div class="date">10/23 五 · 去程</div>
+            <div><div class="ap">廣州南</div><div class="tm">15:30</div><div class="nm">檢票閘口 11 或 B11</div></div>
+            <div class="mid"><span>1h 09m</span><div class="line"></div><svg width="26" height="20" viewBox="0 0 26 20" aria-hidden="true"><path d="M2 14 V6 a4 4 0 0 1 4 -4 H16 l8 6 v6 a2 2 0 0 1 -2 2 H4 a2 2 0 0 1 -2 -2Z" fill="#1F3F8F"/><rect x="6" y="5" width="5" height="4" fill="#F4EDE0"/><rect x="13" y="5" width="5" height="4" fill="#F4EDE0"/><circle cx="7" cy="17" r="2" fill="#1E1A18"/><circle cx="18" cy="17" r="2" fill="#1E1A18"/></svg></div>
+            <div class="to"><div class="ap">西九龍</div><div class="tm">16:39</div><div class="nm">香港西九龍站</div></div>
+            <div class="meta"><span class="no">G6537</span><span>二等座 08 車廂 06F</span><span>已出票</span></div>
+          </div>
+          <div class="leg">
+            <div class="date">10/25 日 · 回程</div>
+            <div><div class="ap">HKG</div><div class="tm">21:10</div><div class="nm">香港第一航廈</div></div>
+            <div class="mid"><span>1h 45m</span><div class="line"></div><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M3 13 L16 6 L19 7 L12 14 L13 18 L11 18 L9 15 L5 16 L4 15 L7 13Z" fill="#1E1A18"/></svg></div>
+            <div class="to"><div class="ap">TPE</div><div class="tm">22:55</div><div class="nm">桃園第二航廈</div></div>
+            <div class="meta"><span class="no">CI924</span><span>華航直飛</span><span>經濟艙</span></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 每日行程 -->
+<section id="days">
+  <div class="wrap">
+    <div class="sec-head">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect x="4" y="16" width="32" height="14" rx="3" fill="#2E7D5B" stroke="#1E1A18" stroke-width="2.5"/><rect x="4" y="8" width="32" height="10" rx="3" fill="#F4EDE0" stroke="#1E1A18" stroke-width="2.5"/><g fill="#F6C244"><rect x="8" y="19" width="5" height="6"/><rect x="16" y="19" width="5" height="6"/><rect x="24" y="19" width="5" height="6"/></g><circle cx="12" cy="32" r="3" fill="#1E1A18"/><circle cx="28" cy="32" r="3" fill="#1E1A18"/></svg>
+      <div><div class="eyebrow">Itinerary</div><h2>每日行程</h2></div>
+    </div>
+    <div class="daytabs" role="tablist" aria-label="選擇日期" id="daytabs"></div>
+    <div class="filter" role="group" aria-label="篩選誰的行程">
+      <span>看誰的：</span>
+      <button type="button" data-who="all" aria-pressed="true" id="f-all">全部</button>
+      <button type="button" data-who="me" aria-pressed="false" id="f-me">JW</button>
+      <button type="button" data-who="friend" aria-pressed="false" id="f-friend">西卡</button>
+    </div>
+    <div id="daypanel" role="tabpanel"></div>
+  </div>
+</section>
+
+<!-- 待辦清單 -->
+<section id="todo">
+  <div class="wrap">
+    <div class="sec-head">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 16 Q20 4 32 16 L30 30 Q20 36 10 30Z" fill="#F6C244" stroke="#1E1A18" stroke-width="2.5" stroke-linejoin="round"/><ellipse cx="20" cy="18" rx="9" ry="5" fill="#F2A43C" stroke="#1E1A18" stroke-width="2"/></svg>
+      <div><div class="eyebrow">Checklist</div><h2>出發前打勾</h2></div>
+    </div>
+    <ul class="todo" id="todolist"></ul>
+    <div class="todo-foot"><span id="todo-count">0 / 0 完成</span><button type="button" id="todo-reset">全部清除</button></div>
+  </div>
+</section>
+
+<!-- 記帳 -->
+<section id="money">
+  <div class="wrap">
+    <div class="sec-head">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect x="7" y="5" width="26" height="30" rx="3" fill="#F4EDE0" stroke="#1E1A18" stroke-width="2.5"/><path d="M12 13 h16 M12 19 h16 M12 25 h9" stroke="#2458A6" stroke-width="2.5" stroke-linecap="round"/><circle cx="28" cy="29" r="7" fill="#F6C244" stroke="#1E1A18" stroke-width="2.5"/><text x="28" y="32.5" font-size="9" font-weight="900" text-anchor="middle" fill="#1E1A18" font-family="Noto Sans TC, sans-serif">$</text></svg>
+      <div><div class="eyebrow">Expenses</div><h2>記帳</h2></div>
+    </div>
+    <p class="mnote">只存在這支手機。兩個人各記各的，再用最下面的帳本代碼合併。</p>
+
+    <div class="mtotal" aria-live="polite">
+      <div class="mt-main">
+        <div class="lb" id="m-lb">全部支出</div>
+        <div class="big" id="m-hkd">HK$0</div>
+        <div class="sm" id="m-twd">NT$0</div>
+      </div>
+      <div class="mt-split">
+        <div class="row"><span class="tag who-me">JW</span>付了 <b id="m-pme">HK$0</b>，該出 <b id="m-ome">HK$0</b></div>
+        <div class="row"><span class="tag who-fr">西卡</span>付了 <b id="m-pfr">HK$0</b>，該出 <b id="m-ofr">HK$0</b></div>
+        <div class="settle" id="m-settle">目前不用找錢</div>
+      </div>
+    </div>
+
+    <div class="mchips" id="m-days" role="group" aria-label="篩選日期"></div>
+
+    <form class="mform" id="m-form" autocomplete="off">
+      <div class="mrow"><span>金額</span><input id="m-amt" type="number" inputmode="decimal" step="0.1" min="0" placeholder="0" required></div>
+      <div class="mrow"><span>幣別</span><div class="seg" data-f="c"><button type="button" data-v="HKD" aria-pressed="true">HK$</button><button type="button" data-v="TWD" aria-pressed="false">NT$</button></div></div>
+      <div class="mrow"><span>誰付</span><div class="seg" data-f="by"><button type="button" data-v="me" aria-pressed="true">JW</button><button type="button" data-v="friend" aria-pressed="false">西卡</button></div></div>
+      <div class="mrow"><span>分攤</span><div class="seg" data-f="sp"><button type="button" data-v="half" aria-pressed="true">平分</button><button type="button" data-v="me" aria-pressed="false">只算 JW</button><button type="button" data-v="friend" aria-pressed="false">只算西卡</button></div></div>
+      <div class="mrow"><span>付款</span><div class="seg" data-f="pm"><button type="button" data-v="cash" aria-pressed="true">現金</button><button type="button" data-v="oct" aria-pressed="false">八達通</button><button type="button" data-v="card" aria-pressed="false">刷卡</button></div></div>
+      <div class="mrow"><span>分類</span><select id="m-cat"></select></div>
+      <div class="mrow"><span>日期</span><select id="m-day"></select></div>
+      <div class="mrow"><span>備註</span><input id="m-note" type="text" placeholder="例：澳洲牛奶 早餐"></div>
+      <button class="mbtn" type="submit">記一筆</button>
+    </form>
+
+    <div id="m-brk-wrap" hidden>
+      <h3 class="mh">分類</h3>
+      <div class="mbrk" id="m-brk"></div>
+    </div>
+
+    <h3 class="mh">明細</h3>
+    <ul class="mlist" id="m-list"></ul>
+
+    <h3 class="mh">設定與合併</h3>
+    <div class="mset">
+      <div class="rate"><label for="m-rate">匯率</label>1 港幣 = <input id="m-rate" type="number" inputmode="decimal" step="0.01" min="0"> 台幣</div>
+      <div>
+        <label for="m-code">帳本代碼</label>
+        <textarea id="m-code" placeholder="按「複製我的帳本代碼」，傳給對方；把對方傳來的代碼貼在這裡，再按「合併」。"></textarea>
+        <button class="mbtn ghost" type="button" id="m-export">複製我的帳本代碼</button>
+        <button class="mbtn ghost" type="button" id="m-merge">合併貼上的代碼</button>
+      </div>
+      <button class="mbtn ghost" type="button" id="m-tsv">複製成表格</button>
+      <button class="mbtn ghost warn" type="button" id="m-clear">清空所有記帳</button>
+      <p class="mmsg" id="m-msg" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<!-- 住宿 -->
+<section id="stay">
+  <div class="wrap">
+    <div class="sec-head">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect x="6" y="10" width="28" height="24" rx="3" fill="#2458A6" stroke="#1E1A18" stroke-width="2.5"/><g fill="#F6C244"><rect x="11" y="15" width="5" height="5"/><rect x="19" y="15" width="5" height="5"/><rect x="27" y="15" width="3" height="5"/><rect x="11" y="24" width="5" height="5"/><rect x="27" y="24" width="3" height="5"/></g><rect x="18" y="24" width="6" height="10" fill="#D7312E" stroke="#1E1A18" stroke-width="2"/></svg>
+      <div><div class="eyebrow">Stay</div><h2>住宿</h2></div>
+    </div>
+    <article class="stay">
+      <div class="stay-art">
+        <svg viewBox="0 0 360 110" aria-hidden="true">
+          <g stroke="#1E1A18" stroke-width="2.5" stroke-linejoin="round">
+            <rect x="60" y="30" width="90" height="80" fill="#2D3B6B"/>
+            <rect x="150" y="10" width="70" height="100" fill="#2458A6"/>
+            <rect x="220" y="44" width="80" height="66" fill="#2D3B6B"/>
+          </g>
+          <g fill="#F6C244">
+            <rect x="68" y="40" width="8" height="8"/><rect x="84" y="40" width="8" height="8"/><rect x="100" y="40" width="8" height="8"/><rect x="116" y="56" width="8" height="8"/><rect x="68" y="72" width="8" height="8"/><rect x="100" y="72" width="8" height="8"/>
+            <rect x="158" y="20" width="8" height="8"/><rect x="174" y="20" width="8" height="8"/><rect x="190" y="36" width="8" height="8"/><rect x="158" y="52" width="8" height="8"/><rect x="190" y="68" width="8" height="8"/><rect x="174" y="84" width="8" height="8"/>
+            <rect x="230" y="54" width="8" height="8"/><rect x="262" y="54" width="8" height="8"/><rect x="246" y="72" width="8" height="8"/><rect x="278" y="88" width="8" height="8"/>
+          </g>
+          <rect x="150" y="0" width="70" height="12" rx="3" fill="#D7312E" stroke="#1E1A18" stroke-width="2.5"/>
+          <text x="185" y="9.5" font-size="8" fill="#fff" text-anchor="middle" font-family="Noto Sans TC, sans-serif" font-weight="700">DORSETT</text>
+          <rect x="176" y="92" width="18" height="18" fill="#F6C244" stroke="#1E1A18" stroke-width="2.5"/>
+          <g transform="translate(14,84)">
+            <rect x="0" y="0" width="40" height="18" rx="4" fill="#D7312E" stroke="#1E1A18" stroke-width="2.5"/>
+            <rect x="0" y="-8" width="40" height="10" rx="3" fill="#F4EDE0" stroke="#1E1A18" stroke-width="2.5"/>
+            <circle cx="9" cy="20" r="4" fill="#1E1A18"/><circle cx="31" cy="20" r="4" fill="#1E1A18"/>
+            <text x="20" y="13" font-size="8" fill="#fff" text-anchor="middle" font-family="Chocolate Classical Sans, Noto Sans TC, sans-serif">觀塘</text>
+          </g>
+        </svg>
+      </div>
+      <div class="stay-body">
+        <h3>香港觀塘帝盛酒店</h3>
+        <div class="en">Dorsett Kwun Tong, Hong Kong</div>
+        <dl class="kv">
+          <dt>地址</dt><dd>九龍觀塘鴻圖道 84 號</dd>
+          <dt>電話</dt><dd><code>+852 3989 6888</code></dd>
+          <dt>港鐵</dt><dd>觀塘線 觀塘站，步行約 8 分鐘</dd>
+          <dt>入住</dt><dd>10/23（五）15:00 起。西卡 12:15 寄行李，JW 17:50 辦入住</dd>
+          <dt>退房</dt><dd>10/25（日）12:00 前，寄存行李到下午出發</dd>
+          <dt>穿梭巴士</dt><dd>酒店有免費穿梭車往 apm、尖沙咀、機場快線九龍站，班次先向櫃台確認</dd>
+          <dt>附近</dt><dd>apm 商場、觀塘海濱、裕民坊；觀塘線直達旺角、太子、深水埗</dd>
+        </dl>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 店家清單 -->
+<section id="list">
+  <div class="wrap">
+    <div class="sec-head">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect x="10" y="6" width="20" height="28" rx="4" fill="#F4EDE0" stroke="#1E1A18" stroke-width="2.5"/><rect x="14" y="2" width="12" height="8" rx="2" fill="#E8449A" stroke="#1E1A18" stroke-width="2.5"/><path d="M14 18 h12 M14 24 h12 M14 30 h8" stroke="#2458A6" stroke-width="2.5" stroke-linecap="round"/></svg>
+      <div><div class="eyebrow">Main list</div><h2>主清單：想吃的店</h2></div>
+    </div>
+    <p style="margin-bottom:14px;font-size:14px;color:var(--ink-2);font-weight:700">必吃：澳洲牛奶（六早）、再興燒臘（六午）、愛文生（六晚）、老馮點心（日早）、楚撚記（五宵夜）。妹記、肥姐、嘉多娜、沾仔記順路吃。女人街食飯公司是 Plan B，半島不排。</p>
+    <a class="map-btn" href="https://maps.app.goo.gl/SQs9fjgY8dQAWcRi7" target="_blank" rel="noopener">打開 Google Maps 清單 ↗</a>
+    <div class="places" id="places"></div>
+    <p style="margin-top:12px;font-size:13px;color:var(--ink-2);font-weight:700">營業時間以網路資料整理，出發前再用 Google Maps 確認一次。</p>
+  </div>
+</section>
+
+<!-- 備選口袋名單 -->
+<section id="options">
+  <div class="wrap">
+    <div class="sec-head">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><path d="M10 12 h20 l-2 20 a3 3 0 0 1 -3 3 h-10 a3 3 0 0 1 -3 -3Z" fill="#F4EDE0" stroke="#1E1A18" stroke-width="2.5" stroke-linejoin="round"/><path d="M12 12 a8 5 0 0 1 16 0" fill="#C98A4B" stroke="#1E1A18" stroke-width="2.5"/><path d="M30 16 a4 4 0 0 1 0 8" fill="none" stroke="#1E1A18" stroke-width="2.5"/><path d="M15 8 q2 -3 0 -5 M20 8 q2 -3 0 -5" stroke="#1E1A18" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      <div><div class="eyebrow">Plan B</div><h2>Plan B 口袋名單</h2></div>
+    </div>
+    <p style="margin-bottom:14px;font-size:14px;color:var(--ink-2);font-weight:700">第二份 Google Maps 清單「HK」和之前的行程表，依區域分組。</p>
+    <a class="map-btn" href="https://maps.app.goo.gl/dai1RK28sZWKwdFq5" target="_blank" rel="noopener">打開「HK」清單 ↗</a>
+    <div id="options-list"></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <span class="plate"><span class="r">觀塘</span><span class="b">KWUN TONG</span></span>
+  <p style="margin-top:12px">2026.10.23 – 10.25 · JW、西卡</p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var WHO = {me:'JW', friend:'西卡', both:'一齊'};
+  var WHO_CLS = {me:'who-me', friend:'who-fr', both:'who-all'};
+  var TR = {
+    mtr:['港鐵','tr-mtr'], bus:['巴士','tr-bus'], taxi:['的士','tr-taxi'], ferry:['天星小輪','tr-ferry'],
+    tram:['叮叮車','tr-tram'], peak:['山頂纜車','tr-tram'], walk:['步行','tr-walk'], train:['高鐵','tr-train'], plane:['飛機','tr-plane']
+  };
+  var M = 'https://www.google.com/maps/search/?api=1&query=';
+  function map(q){ return M + encodeURIComponent(q + ' 香港'); }
+
+  var DAYS = [
+    {
+      d:'10/23', w:'五', k:'各自晚餐 · 宵夜',
+      title:'抵港日',
+      note:'西卡早上先到，下午自己逛旺角、太子和西九，傍晚過海跟朋友吃飯。JW 傍晚從廣州進香港，在旺角跟 KKday 同事吃飯。21:45 兩人跟 Miki 在土瓜灣吃宵夜。',
+      items:[
+        {t:'08:00', who:'friend', tr:'plane', name:'桃園 T1 起飛 CX407', p:'落地前把八達通加進手機錢包。'},
+        {t:'10:00', who:'friend', tr:'plane', name:'抵達香港機場 T1', p:'入境、領行李。'},
+        {t:'11:00', who:'friend', tr:'bus', name:'A22 機場巴士 → 觀塘', p:'往藍田方向，觀塘站落車，約 75 分鐘，HK$39。'},
+        {t:'12:15', who:'friend', tr:'walk', name:'Dorsett 寄存行李', p:'15:00 才能入住，先把行李放櫃台。'},
+        {t:'12:30', who:'friend', tr:'mtr', name:'觀塘 → 旺角', p:'觀塘線直達約 25 分鐘，B3 出口。'},
+        {t:'13:00', who:'friend', tr:'walk', must:true, name:'妹記生滾粥品 午餐', p:'旺角花園街 123A 號街市熟食中心 2 樓。15:00 收爐，週日休。魚腩粥、鯇魚片粥、油炸鬼，只收現金。', q:'妹記生滾粥品 旺角'},
+        {t:'13:45', who:'friend', tr:'walk', must:true, name:'金魚街 → 花墟 → 雀仔街', p:'從花園街往北走，三條街連在一起，約 1 小時。雀仔街的店多數 17:00 前收。', q:'園圃街雀鳥花園', alt:'女人街、波鞋街在妹記南邊，走路 5 分鐘。'},
+        {t:'14:45', who:'friend', tr:'mtr', name:'太子 → 西九文化區', p:'荃灣線到佐敦，D 出口沿柯士甸道往西走約 15 分鐘。'},
+        {t:'15:15', who:'friend', tr:'walk', must:true, name:'M+ 博物館', p:'星期五開到 22:00。門票看官網，頂層花園和大堂免費。', q:'M+ 博物館', alt:'隔壁是香港故宮文化博物館。'},
+        {t:'16:45', who:'friend', tr:'walk', must:true, name:'西九海濱 看日落', p:'M+ 旁邊的海濱長廊和藝術公園，對面是中環天際線。17:50 日落。', q:'西九文化區 藝術公園'},
+        {t:'17:55', who:'friend', tr:'mtr', name:'九龍站 → 港島', p:'九龍站坐東涌線一站到香港站（中環），約 5 分鐘。', alt:'想去海灘：中環交易廣場坐 6X 或 260 號巴士到淺水灣，約 30 分鐘。朋友約在鰂魚涌：可以順路看怪獸大廈外觀，內院是私人地方。'},
+        {t:'18:30', who:'friend', tr:'walk', name:'和朋友晚餐（港島）', p:'地點西卡定。'},
+        {split:'JW 從廣州進來'},
+        {t:'15:30', who:'me', tr:'train', name:'廣州南 G6537 出發', p:'檢票閘口 11 或 B11，二等座 08 車廂 06F。'},
+        {t:'16:39', who:'me', tr:'train', name:'抵達香港西九龍站', p:'一地兩檢，出站約 20 分鐘。'},
+        {t:'17:10', who:'me', tr:'mtr', name:'西九龍 → 觀塘', p:'柯士甸站坐屯馬線，鑽石山轉觀塘線，約 35 分鐘。'},
+        {t:'17:50', who:'me', tr:'walk', name:'Dorsett 辦入住', p:'把西卡寄存的行李一起拿進房間。'},
+        {t:'18:20', who:'me', tr:'mtr', name:'觀塘 → 旺角', p:'觀塘線直達，約 25 分鐘。'},
+        {t:'19:00', who:'me', tr:'walk', name:'KKday 同事晚餐（旺角）', p:'地點同事定。', alt:'旺角可以吃：女人街食飯公司（訂位 2685 1618）、光榮冰室、米走雞。'},
+        {t:'20:30', who:'me', tr:'walk', name:'Crudo Leather Craft 朗豪坊店', p:'朗豪坊 9 樓 19-21 號舖，21:00 關。來不及就週日飲茶後再去。', q:'Crudo Leather Craft Langham Place'},
+        {split:'宵夜'},
+        {t:'21:15', who:'friend', tr:'mtr', name:'西卡 港島 → 土瓜灣', p:'金鐘坐東鐵線到紅磡，轉屯馬線到土瓜灣，約 25 分鐘。'},
+        {t:'21:20', who:'me', tr:'mtr', name:'JW 旺角 → 土瓜灣', p:'觀塘線到何文田，轉屯馬線到土瓜灣，約 15 分鐘。'},
+        {t:'21:45', who:'both', tr:'walk', must:true, name:'宵夜：楚撚記大排檔（跟 Miki）', p:'土瓜灣馬坑涌道 2C 號，開到 02:00，人均約 HK$120–150。椒鹽鮮魷、豉椒炒蜆、炒河。Miki 從九龍灣過來約 20 分鐘。', q:'楚撚記大排檔 土瓜灣', alt:'Miki 想在九龍灣吃也可以，回觀塘只要一站。'},
+        {t:'23:30', who:'both', tr:'mtr', name:'土瓜灣 → 觀塘 回酒店', p:'屯馬線到鑽石山轉觀塘線，約 20 分鐘。末班車約 00:30。'}
+      ]
+    },
+    {
+      d:'10/24', w:'六', k:'港島日',
+      title:'港島日',
+      note:'早上在油麻地、佐敦吃早餐，坐天星小輪到中環，在中環喝蘭芳園、吃泰昌和 Bakehouse 蛋撻，叮叮到灣仔吃燒味，再坐叮叮到堅尼地城看日落。晚上逛信和、20:00 在尖沙咀看幻彩詠香江，走廟街，最後到深水埗吃愛文生。',
+      items:[
+        {t:'08:30', who:'both', tr:'mtr', name:'觀塘 → 油麻地', p:'觀塘線直達約 20 分鐘，A2 出口。'},
+        {t:'08:50', who:'both', tr:'walk', name:'嘉多娜麵包店', p:'油麻地碧街 54 號。布甸麵包外帶。', q:'嘉多娜麵包店 油麻地'},
+        {t:'09:10', who:'both', tr:'walk', must:true, name:'澳洲牛奶公司', p:'佐敦白加士街 47 號，從碧街往南走 10 分鐘。炒蛋多士、燉奶，翻枱快。', q:'澳洲牛奶公司 佐敦', alt:'排太長：麥文記麵家、和順記。'},
+        {t:'10:15', who:'both', tr:'walk', name:'走到尖沙咀碼頭', p:'沿彌敦道往南約 20 分鐘，或佐敦坐一站到尖沙咀。'},
+        {t:'10:45', who:'both', tr:'ferry', must:true, name:'天星小輪 尖沙咀 → 中環', p:'上層 HK$6.5，約 9 分鐘。', q:'天星碼頭 尖沙咀'},
+        {t:'11:30', who:'both', tr:'walk', name:'沾仔記 雲吞麵', p:'中環威靈頓街 98 號。鮮蝦雲吞麵、鯪魚球。', q:'沾仔記 威靈頓街'},
+        {t:'12:10', who:'both', tr:'walk', name:'中環街市 → 石板街 → 嘉咸街塗鴉牆', p:'都在沾仔記附近，走路連在一起，約 30 分鐘。'},
+        {t:'12:45', who:'both', tr:'walk', must:true, name:'蘭芳園 絲襪奶茶', p:'中環結志街 2 號，嘉咸街走上去就到。絲襪奶茶、豬扒包。07:30–18:00，週日休。', q:'蘭芳園 中環 結志街'},
+        {t:'13:15', who:'both', tr:'walk', must:true, name:'泰昌餅家 → Bakehouse 蛋撻', p:'泰昌在擺花街 35 號，傳統酥皮蛋撻。再坐半山扶手電梯上到士丹頓街 5 號 Bakehouse，酸種蛋撻約 HK$14，只能外帶。兩種各買一個比較。', q:'Bakehouse 士丹頓街', alt:'Bakehouse 賣完了：灣仔大王東街 14 號分店，等一下逛利東街會經過。'},
+        {t:'13:45', who:'both', tr:'walk', name:'大館', p:'荷李活道 10 號，舊中區警署，免費。從 Bakehouse 走 5 分鐘。'},
+        {t:'14:20', who:'both', tr:'tram', name:'叮叮車 中環 → 灣仔', p:'德輔道中上車，HK$3，用八達通。柯布連道站落車。'},
+        {t:'14:45', who:'both', tr:'walk', must:true, name:'再興燒臘飯店', p:'灣仔軒尼詩道 265 號。叉燒飯、燒鵝飯，兩人分一碟。週日休。', q:'再興燒臘飯店 灣仔', alt:'甘牌燒鵝、竺扶大班燒味、發達叉燒（12:00–16:00）。'},
+        {t:'15:20', who:'both', tr:'walk', name:'灣仔', p:'利東街、藍屋、茂蘿街綠屋。', alt:'想坐下來：豪華咖啡茶廳、金鳳茶餐廳、檀島咖啡餅店都在這一帶。'},
+        {t:'16:00', who:'both', tr:'tram', must:true, name:'叮叮車 灣仔 → 堅尼地城', p:'坐往堅尼地城的車到總站，約 45 分鐘。', q:'堅尼地城 電車總站'},
+        {t:'16:50', who:'both', tr:'walk', name:'堅尼地城海濱 看日落', p:'總站走 5 分鐘到新海旁，17:50 日落。', q:'堅尼地城 新海旁'},
+        {t:'18:00', who:'both', tr:'mtr', name:'堅尼地城 → 油麻地', p:'港島線到中環轉荃灣線，約 30 分鐘，A2 出口。', alt:'太平山：中環交易廣場坐 15 號巴士，HK$12，約 40 分鐘。去的話信和要取消。'},
+        {t:'18:35', who:'both', tr:'walk', must:true, name:'信和中心', p:'彌敦道 582–592 號，油麻地站走 3 分鐘。動漫、遊戲、模型、扭蛋。店多數 21:00–21:30 關，所以先來。', q:'信和中心 旺角', alt:'隔壁好景商業中心。'},
+        {t:'19:25', who:'both', tr:'walk', name:'肥姐小食店', p:'登打士街 55 號 4A 舖，信和走 3 分鐘。墨魚、生腸、滷味串，只收現金。先墊一下，晚餐比較晚。', q:'肥姐小食店 旺角'},
+        {t:'19:40', who:'both', tr:'mtr', name:'油麻地 → 尖沙咀', p:'荃灣線兩站，往尖沙咀海濱走約 10 分鐘。19:55 前要到。'},
+        {t:'20:00', who:'both', tr:'walk', must:true, name:'幻彩詠香江 燈光秀', p:'每晚 20:00，約 10 分鐘。尖沙咀海濱或星光大道看，對岸大樓的燈和雷射一起打。看完待一下看夜景。', q:'星光大道 尖沙咀', alt:'下雨或天氣不好可能取消，當天看旅發局公告。'},
+        {t:'20:30', who:'both', tr:'walk', must:true, name:'廟街夜市', p:'荃灣線一站到佐敦，或沿彌敦道走 15 分鐘。廟街從佐敦往北走到油麻地，約 40 分鐘。', q:'廟街夜市', alt:'興記菜館煲仔飯在廟街。'},
+        {t:'21:20', who:'both', tr:'mtr', name:'油麻地 → 深水埗', p:'荃灣線三站，約 8 分鐘，走到石硤尾街約 8 分鐘。'},
+        {t:'21:35', who:'both', tr:'walk', must:true, name:'愛文生 晚餐', p:'深水埗石硤尾街 1 號，開到 23:00，人均約 HK$150–200。鹹蛋黃炒蟹、豉椒炒蜆、黑椒牛仔骨。晚上 9 點後人比較少。', q:'愛文生 深水埗', alt:'想早點吃：女人街食飯公司（旺角，18:00 開，訂位 2685 1618），信和吃完先去，燈光秀就要趕。Miki 22:00 下班，觀塘線從九龍灣直達深水埗約 25 分鐘，可以來一起吃。'},
+        {t:'22:45', who:'both', tr:'mtr', name:'深水埗 → 觀塘 回酒店', p:'觀塘線直達，約 25 分鐘。'}
+      ]
+    },
+    {
+      d:'10/25', w:'日', k:'深水埗 · 回家',
+      title:'深水埗日',
+      note:'早上旺角飲茶，下午深水埗。15:00 回酒店拿行李，西卡 16:00、JW 17:30 各自去機場。',
+      items:[
+        {t:'09:30', who:'both', tr:'walk', name:'退房，寄存行李', p:'下午回來拿。'},
+        {t:'10:30', who:'both', tr:'mtr', must:true, name:'老馮茶居 飲茶', p:'旺角奶路臣街 17 號 THE FOREST 2 樓。千層糕、蝦餃、牛肉球，12:30 後要等位。', q:'老馮茶居 旺角', alt:'一點心（太子）。Crudo Leather Craft 在旁邊朗豪坊 9 樓。'},
+        {t:'12:15', who:'both', tr:'mtr', name:'旺角 → 深水埗', p:'觀塘線兩站。'},
+        {t:'12:30', who:'both', tr:'walk', name:'深水埗', p:'鴨寮街、大南街、南昌押、黃竹街。', alt:'美荷樓生活館、六安居、Issue 手信店、文記車仔麵。'},
+        {t:'15:00', who:'both', tr:'mtr', name:'深水埗 → 觀塘 拿行李', p:'觀塘線直達約 25 分鐘。'},
+        {split:'西卡去機場'},
+        {t:'16:00', who:'friend', tr:'bus', name:'Dorsett → 機場', p:'觀塘站旁坐 A22，約 70 分鐘，HK$39。'},
+        {t:'17:15', who:'friend', tr:'plane', name:'抵達機場 T1', p:'國泰櫃台 18:35 關。'},
+        {t:'19:35', who:'friend', tr:'plane', name:'CX464 起飛', p:'21:20 到桃園第一航廈。'},
+        {split:'JW 晚一點走'},
+        {t:'16:00', who:'me', tr:'walk', name:'觀塘海濱 / apm', p:'行李寄在酒店。', alt:'想再吃一攤：深水埗愛文生 16:30 開，18:00 荔景轉東涌線、青衣轉機場快線。'},
+        {t:'17:30', who:'me', tr:'bus', name:'Dorsett → 機場', p:'拿行李，觀塘站旁坐 A22，約 70 分鐘。'},
+        {t:'18:45', who:'me', tr:'plane', name:'抵達機場 T1', p:'華航櫃台 20:10 關，登機門 20:40 關。'},
+        {t:'21:10', who:'me', tr:'plane', name:'CI924 起飛', p:'22:55 到桃園第二航廈。'}
+      ]
+    }
+  ];
+
+  var TODO = [
+    ['訂房名單加上兩人', 'Dorsett 訂房要有 JW 和西卡兩個名字'],
+    ['愛文生 10/24（六）21:35', '打 2393 9315 問能不能留位'],
+    ['約 Miki 宵夜', '10/23（五）21:45 楚撚記'],
+    ['Miki 伴手禮', '從台灣帶'],
+    ['星期五各自晚餐地點', '西卡：港島；JW：旺角'],
+    ['八達通加進手機錢包', 'Apple Wallet / Google Wallet'],
+    ['換港幣現金', '妹記、肥姐、大排檔多數只收現金，約 HK$1,500'],
+    ['證件', '西卡：護照＋預辦入境登記；JW：台胞證＋護照'],
+    ['高鐵票 G6537', '已出票，檢票閘口 11 / B11'],
+    ['英規三腳轉接頭', 'BS1363'],
+    ['下載 MTR Mobile、Google Maps 離線地圖', 'A22 巴士路線也存起來'],
+    ['旅遊保險、機票截圖', 'CX407 / CX464、CI924'],
+    ['雨具', '十月底可能下雨']
+  ];
+
+  var PLACES = [
+    ['澳洲牛奶公司','必吃 六早','澳洲牛奶公司 佐敦'],
+    ['再興燒臘飯店','必吃 六午','再興燒臘飯店 灣仔'],
+    ['愛文生','必吃 六晚','愛文生 深水埗'],
+    ['老馮茶居','必吃 日早','老馮茶居 旺角'],
+    ['妹記生滾粥品','順路 五午','妹記生滾粥品 旺角'],
+    ['肥姐小食店','順路 六晚','肥姐小食店 旺角'],
+    ['嘉多娜麵包店','順路 六早','嘉多娜麵包店 油麻地'],
+    ['沾仔記','順路 六午','沾仔記 威靈頓街'],
+    ['女人街食飯公司','Plan B','女人街食飯公司 旺角'],
+    ['楚撚記大排檔','必吃 五宵夜','楚撚記大排檔 土瓜灣'],
+    ['香港半島酒店','不排','香港半島酒店']
+  ];
+
+  var state = {day:0, who:'all'};
+  try { var s = JSON.parse(localStorage.getItem('hk-trip-view')||'{}'); if (s.day in DAYS) state.day = s.day; if (s.who) state.who = s.who; } catch(e){}
+  if (location.hash === '#day2') state.day = 1; else if (location.hash === '#day3') state.day = 2;
+
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  function renderTabs(){
+    var el = document.getElementById('daytabs');
+    el.innerHTML = DAYS.map(function(d,i){
+      return '<button type="button" class="daytab" role="tab" id="tab-'+i+'" aria-selected="'+(i===state.day)+'" aria-controls="daypanel" data-i="'+i+'">'+
+        '<div class="d">'+esc(d.d)+'</div><div class="w">星期'+esc(d.w)+'</div><div class="k">'+esc(d.k)+'</div></button>';
+    }).join('');
+  }
+
+  function renderDay(){
+    var d = DAYS[state.day];
+    var html = '<div class="day-title"><h3>'+esc(d.title)+'</h3><p>'+esc(d.note)+'</p></div><ol class="tl">';
+    var shown = 0;
+    d.items.forEach(function(it, idx){
+      if (it.split){
+        if (state.who === 'all') html += '<li class="split">'+esc(it.split)+'</li>';
+        return;
+      }
+      var visible = state.who === 'all' || it.who === 'both' || it.who === state.who;
+      if (!visible) return;
+      shown++;
+      var tr = TR[it.tr];
+      html += '<li class="ev" data-who="'+it.who+'" style="animation-delay:'+(Math.min(shown,12)*35)+'ms">'+
+        '<div class="t">'+esc(it.t)+'</div><span class="dot" aria-hidden="true"></span>'+
+        '<div class="card"><div class="tags">'+
+          '<span class="tag '+WHO_CLS[it.who]+'">'+WHO[it.who]+'</span>'+
+          (tr ? '<span class="tag '+tr[1]+'">'+tr[0]+'</span>' : '')+
+          (it.must ? '<span class="tag must">必去</span>' : '')+
+        '</div><h4>'+esc(it.name)+'</h4>'+
+        (it.p ? '<p>'+esc(it.p)+'</p>' : '')+
+        (it.alt ? '<p class="alt"><b>Plan B</b> '+esc(it.alt)+'</p>' : '')+
+        (it.q ? '<div class="links"><a href="'+map(it.q)+'" target="_blank" rel="noopener">在 Google Maps 打開 ↗</a></div>' : '')+
+        '</div></li>';
+    });
+    html += '</ol>';
+    if (!shown) html += '<p class="tl-empty">這天沒有單獨的行程。</p>';
+    document.getElementById('daypanel').innerHTML = html;
+    document.querySelectorAll('.daytab').forEach(function(b){ b.setAttribute('aria-selected', String(+b.dataset.i === state.day)); });
+    document.querySelectorAll('.filter button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.who === state.who)); });
+    try { localStorage.setItem('hk-trip-view', JSON.stringify(state)); } catch(e){}
+  }
+
+  document.getElementById('daytabs').addEventListener('click', function(e){
+    var b = e.target.closest('.daytab'); if (!b) return;
+    state.day = +b.dataset.i; renderDay();
+  });
+  document.querySelector('.filter').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    state.who = b.dataset.who; renderDay();
+  });
+
+  /* 待辦 */
+  var done = {};
+  try { done = JSON.parse(localStorage.getItem('hk-trip-todo')||'{}') || {}; } catch(e){ done = {}; }
+  function renderTodo(){
+    var ul = document.getElementById('todolist');
+    ul.innerHTML = TODO.map(function(t,i){
+      return '<li><label><input type="checkbox" id="todo-'+i+'" data-i="'+i+'"'+(done[i]?' checked':'')+'><span class="tx">'+esc(t[0])+'<span class="sub">'+esc(t[1])+'</span></span></label></li>';
+    }).join('');
+    countTodo();
+  }
+  function countTodo(){
+    var n = TODO.filter(function(_,i){ return done[i]; }).length;
+    document.getElementById('todo-count').textContent = n + ' / ' + TODO.length + ' 完成';
+  }
+  document.getElementById('todolist').addEventListener('change', function(e){
+    var cb = e.target; if (cb.type !== 'checkbox') return;
+    done[cb.dataset.i] = cb.checked;
+    try { localStorage.setItem('hk-trip-todo', JSON.stringify(done)); } catch(e2){}
+    countTodo();
+  });
+  document.getElementById('todo-reset').addEventListener('click', function(){
+    done = {};
+    try { localStorage.removeItem('hk-trip-todo'); } catch(e){}
+    renderTodo();
+  });
+
+  /* 店家 */
+  document.getElementById('places').innerHTML = PLACES.map(function(p){
+    return '<a class="place" href="'+map(p[2])+'" target="_blank" rel="noopener"><span class="area">'+esc(p[1])+'</span>'+esc(p[0])+'</a>';
+  }).join('');
+
+  /* 備選口袋名單（第二份清單 + 截圖補充） */
+  var OPTIONS = [
+    {area:'旺角 · 太子', fit:'Day 1 西卡下午 / Day 3 早上', items:[
+      ['光榮冰室 (旺角)','茶餐廳'],['一點心','平價點心'],['米走雞 (太子)','火鍋 補鷄煲'],['優點 點心專門店','深宵點心'],
+      ['好旺角誠興麻雀 砵蘭街分店','麻雀館'],['風味園粉麵飯小廚','煲仔飯'],['瑞記西多士','西多士'],['蓮香居','懷舊點心']
+    ]},
+    {area:'佐敦 · 油麻地', fit:'Day 1 五下午 / Day 2 早上', items:[
+      ['巧佳小巴用品','小巴牌 平日限定'],['興記菜館','廟街煲仔飯'],['和順記 (油麻地店)','快餐'],['潮味莊','佐敦大排檔 打冷'],['麥文記麵家','雲吞麵'],['廟街夜市','霓虹街景']
+    ]},
+    {area:'尖沙咀 · 西九', fit:'Day 2 下午', items:[
+      ['女人街食飯公司 (尖沙咀)','訂位備案'],['1881 Heritage','建築'],['錫記招牌雲吞','雲吞麵'],['Crudo Leather Craft 希慎廣場店','銅鑼灣 皮件'],['香港故宮文化博物館','西九'],['Owl\'s Choux Pastry','泡芙'],['GU 美麗華廣場店','逛街'],
+      ['錦繡唐朝','購物'],['Urban Coffee Roaster','咖啡'],['富豪雪糕車','看到就買']
+    ]},
+    {area:'中環 · 上環 · 灣仔 · 銅鑼灣', fit:'Day 2 港島', items:[
+      ['Bakehouse 灣仔店','大王東街 蛋撻'],['一樂燒鵝','中環 燒味'],['中環街市','文青'],['PMQ 元創方','設計店'],['蓮香樓','點心'],
+      ['甘牌燒鵝','灣仔 米其林'],['竺扶大班燒味 (灣仔)','燒味'],['發達叉燒','灣仔 蘭杜街'],['大壹燒鵝 (銅鑼灣)','燒鵝'],
+      ['豪華咖啡茶廳','灣仔 老茶餐廳'],['金鳳茶餐廳','灣仔 凍奶茶'],['華嫂冰室 (灣仔)','冰室'],['檀島咖啡餅店','蛋撻'],['譚仔三哥米線 (灣仔)','米線'],['四寶食堂 (銅鑼灣)','茶餐廳'],['Books & Co.','半山書店'],
+      ['兆成行','上環 精油'],['祥興茶行','上環 茶葉'],['蘭桂坊','酒吧'],['怪獸大廈 益昌大廈','鰂魚涌 拍外觀'],['淺水灣','南區 海灘'],['太平山 15 號巴士','中環交易廣場上車']
+    ]},
+    {area:'深水埗 · 石硤尾', fit:'Day 3 下午', items:[
+      ['美荷樓生活館','舊公屋博物館'],['文記車仔麵','福榮街 開到凌晨'],['六安居','老字號'],['Issue 手信店','手信'],['雅俗共想 good bad creative','古玩 貓店長'],['HEIMA 稀物角落','擴香']
+    ]},
+    {area:'實用 · 連鎖', fit:'隨時', items:[
+      ['遠東行李寄存 西九龍站','行李寄存'],['許氏兄弟找換匯款公司','換錢'],['牛奶冰室','連鎖茶餐廳'],['家嫂 Home Sister','火鍋'],['保頓冰室','已歇業','closed']
+    ]}
+  ];
+  document.getElementById('options-list').innerHTML = OPTIONS.map(function(g){
+    return '<div class="opt-group"><h3>'+esc(g.area)+'<span class="fit">'+esc(g.fit)+'</span></h3><div class="places">'+
+      g.items.map(function(p){
+        var cls = 'place' + (p[2] ? ' '+p[2] : '');
+        return '<a class="'+cls+'" href="'+map(p[0])+'" target="_blank" rel="noopener">'+esc(p[0])+'<span class="note">'+esc(p[1])+'</span></a>';
+      }).join('')+'</div></div>';
+  }).join('');
+
+  /* 記帳：存在這支手機的 localStorage（hk-exp、hk-rate），兩人用帳本代碼合併 */
+  var M_KEY = 'hk-exp', R_KEY = 'hk-rate';
+  var M_DAYS = ['出發前', '10/23', '10/24', '10/25'];
+  var M_CATS = ['餐飲', '交通', '購物', '門票', '住宿', '其他'];
+  var M_CATC = {'餐飲':'var(--red)','交通':'var(--blue)','購物':'var(--pink)','門票':'var(--green)','住宿':'var(--cyan)','其他':'var(--ink-2)'};
+  var M_PM = {cash:'現金', oct:'八達通', card:'刷卡'};
+  var M_SP = {half:'平分', me:'只算 JW', friend:'只算西卡'};
+  function mLoad(k, d){ try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } }
+  function mSave(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+  var book = mLoad(M_KEY, {items:[], del:[]});
+  if (!book || !Array.isArray(book.items)) book = {items:[], del:[]};
+  if (!Array.isArray(book.del)) book.del = [];
+  var rate = +mLoad(R_KEY, 3.9) || 3.9;
+  var mFilter = 'all';
+  var form = {c:'HKD', by:'me', sp:'half', pm:'cash'};
+
+  function hk(e){ return e.c === 'TWD' ? e.a / rate : e.a; }
+  function fmt(n){ return Math.round(n).toLocaleString('en-US'); }
+  function money(n){ return 'HK$' + fmt(n); }
+  function msg(t){ var el = document.getElementById('m-msg'); el.textContent = t; clearTimeout(msg.t); msg.t = setTimeout(function(){ el.textContent = ''; }, 3500); }
+  function todayDay(){
+    var now = new Date(Date.now() + 8*3600000).toISOString().slice(0,10);
+    if (now < '2026-10-23') return '出發前';
+    if (now > '2026-10-25') return '10/25';
+    return '10/' + now.slice(8,10);
+  }
+
+  document.getElementById('m-cat').innerHTML = M_CATS.map(function(c){ return '<option>'+c+'</option>'; }).join('');
+  document.getElementById('m-day').innerHTML = M_DAYS.map(function(d){ return '<option'+(d===todayDay()?' selected':'')+'>'+d+'</option>'; }).join('');
+  document.getElementById('m-rate').value = rate;
+
+  function renderMoney(){
+    var items = book.items.slice().sort(function(a,b){ return (M_DAYS.indexOf(b.d) - M_DAYS.indexOf(a.d)) || (b.ts - a.ts); });
+    var shown = mFilter === 'all' ? items : items.filter(function(e){ return e.d === mFilter; });
+    var tot = shown.reduce(function(s,e){ return s + hk(e); }, 0);
+    document.getElementById('m-lb').textContent = mFilter === 'all' ? '全部支出' : mFilter + ' 支出';
+    document.getElementById('m-hkd').textContent = money(tot);
+    document.getElementById('m-twd').textContent = 'NT$' + fmt(tot * rate);
+
+    /* 分帳永遠用全部的帳算 */
+    var paid = {me:0, friend:0}, owe = {me:0, friend:0};
+    items.forEach(function(e){
+      var v = hk(e);
+      paid[e.by] += v;
+      if (e.sp === 'half') { owe.me += v/2; owe.friend += v/2; } else { owe[e.sp] += v; }
+    });
+    document.getElementById('m-pme').textContent = money(paid.me);
+    document.getElementById('m-ome').textContent = money(owe.me);
+    document.getElementById('m-pfr').textContent = money(paid.friend);
+    document.getElementById('m-ofr').textContent = money(owe.friend);
+    var bal = paid.me - owe.me;
+    document.getElementById('m-settle').textContent = Math.abs(bal) < 1 ? '目前不用找錢' :
+      (bal > 0 ? '西卡要給 JW ' : 'JW 要給西卡 ') + money(Math.abs(bal)) + '（NT$' + fmt(Math.abs(bal) * rate) + '）';
+
+    var chips = [['all','全部']].concat(M_DAYS.map(function(d){ return [d,d]; }));
+    document.getElementById('m-days').innerHTML = chips.map(function(c){
+      return '<button type="button" data-d="'+c[0]+'" aria-pressed="'+(mFilter===c[0])+'">'+c[1]+'</button>';
+    }).join('');
+
+    var by = {};
+    shown.forEach(function(e){ by[e.k] = (by[e.k]||0) + hk(e); });
+    var keys = Object.keys(by).sort(function(a,b){ return by[b]-by[a]; });
+    document.getElementById('m-brk-wrap').hidden = !keys.length;
+    document.getElementById('m-brk').innerHTML = keys.map(function(k){
+      var pct = tot ? by[k]/tot*100 : 0;
+      return '<div class="b"><span>'+esc(k)+'</span><span class="bar"><i style="width:'+pct.toFixed(1)+'%;background:'+(M_CATC[k]||'var(--cyan)')+'"></i></span><span class="v">'+money(by[k])+' · '+Math.round(pct)+'%</span></div>';
+    }).join('');
+
+    document.getElementById('m-list').innerHTML = shown.length ? shown.map(function(e){
+      var other = e.c === 'TWD' ? 'NT$' + fmt(e.a) : 'NT$' + fmt(e.a * rate);
+      return '<li><span class="t">'+esc(e.t || e.k)+'</span>'+
+        '<span class="m">'+esc(e.d)+' · '+esc(e.k)+' · '+(e.by==='me'?'JW':'西卡')+'付 · '+M_SP[e.sp]+' · '+(M_PM[e.pm]||'')+'</span>'+
+        '<span class="a"><b>'+money(hk(e))+'</b><small>'+other+'</small></span>'+
+        '<button type="button" class="del" data-id="'+esc(e.id)+'">刪除</button></li>';
+    }).join('') : '<li class="mempty" style="border:0;background:none;display:block">'+(mFilter==='all'?'還沒有記帳，在上面記第一筆。':'這天還沒有記帳。')+'</li>';
+  }
+
+  document.getElementById('m-days').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    mFilter = b.dataset.d; renderMoney();
+  });
+  document.querySelectorAll('.seg').forEach(function(seg){
+    seg.addEventListener('click', function(e){
+      var b = e.target.closest('button'); if (!b) return;
+      form[seg.dataset.f] = b.dataset.v;
+      seg.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', String(x === b)); });
+    });
+  });
+  document.getElementById('m-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var a = parseFloat(document.getElementById('m-amt').value);
+    if (!(a > 0)) { msg('先填金額'); document.getElementById('m-amt').focus(); return; }
+    book.items.push({
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2,6),
+      a: a, c: form.c, by: form.by, sp: form.sp, pm: form.pm,
+      k: document.getElementById('m-cat').value,
+      d: document.getElementById('m-day').value,
+      t: document.getElementById('m-note').value.trim(),
+      ts: Date.now()
+    });
+    mSave(M_KEY, book);
+    document.getElementById('m-amt').value = '';
+    document.getElementById('m-note').value = '';
+    msg('記好了'); renderMoney();
+  });
+  document.getElementById('m-list').addEventListener('click', function(e){
+    var b = e.target.closest('.del'); if (!b) return;
+    if (!b.classList.contains('armed')) {
+      b.classList.add('armed'); b.textContent = '再按一次刪除';
+      setTimeout(function(){ if (b.isConnected) { b.classList.remove('armed'); b.textContent = '刪除'; } }, 3000);
+      return;
+    }
+    var id = b.dataset.id;
+    book.items = book.items.filter(function(x){ return x.id !== id; });
+    if (book.del.indexOf(id) < 0) book.del.push(id);
+    mSave(M_KEY, book); renderMoney(); msg('刪掉了');
+  });
+  document.getElementById('m-rate').addEventListener('change', function(){
+    var v = parseFloat(this.value);
+    if (v > 0) { rate = v; mSave(R_KEY, rate); renderMoney(); msg('匯率更新了'); } else { this.value = rate; }
+  });
+
+  function copyText(text, okMsg){
+    var ta = document.getElementById('m-code');
+    function fallback(){ ta.value = text; ta.focus(); ta.select(); msg('沒辦法自動複製，已選取，請手動複製'); }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function(){ msg(okMsg); }, fallback);
+      } else { fallback(); }
+    } catch(e){ fallback(); }
+  }
+  document.getElementById('m-export').addEventListener('click', function(){
+    if (!book.items.length && !book.del.length) { msg('還沒有記帳'); return; }
+    var json = JSON.stringify({v:1, items:book.items, del:book.del});
+    var code = 'HKTRIP1:' + btoa(unescape(encodeURIComponent(json)));
+    copyText(code, '代碼複製好了，傳給對方');
+  });
+  document.getElementById('m-merge').addEventListener('click', function(){
+    var raw = document.getElementById('m-code').value.trim();
+    var m = raw.match(/HKTRIP1:([A-Za-z0-9+\/=]+)/);
+    if (!m) { msg('找不到帳本代碼，整段貼上再試一次'); return; }
+    var other;
+    try { other = JSON.parse(decodeURIComponent(escape(atob(m[1])))); } catch(e){ msg('代碼不完整，請對方重新複製'); return; }
+    if (!other || !Array.isArray(other.items)) { msg('代碼不完整，請對方重新複製'); return; }
+    var del = book.del.slice();
+    (other.del || []).forEach(function(id){ if (del.indexOf(id) < 0) del.push(id); });
+    var seen = {}, merged = [], added = 0;
+    book.items.forEach(function(x){ seen[x.id] = 1; });
+    book.items.concat(other.items.filter(function(x){
+      var ok = x && x.id && !seen[x.id] && x.a > 0 && M_DAYS.indexOf(x.d) >= 0;
+      if (ok) added++;
+      return ok;
+    })).forEach(function(x){ if (del.indexOf(x.id) < 0) merged.push(x); });
+    book = {items: merged, del: del};
+    mSave(M_KEY, book);
+    document.getElementById('m-code').value = '';
+    renderMoney(); msg('合併好了，多了 ' + added + ' 筆');
+  });
+  document.getElementById('m-tsv').addEventListener('click', function(){
+    if (!book.items.length) { msg('還沒有記帳'); return; }
+    var rows = [['日期','分類','備註','金額','幣別','港幣','誰付','分攤','付款'].join('\t')];
+    book.items.forEach(function(e){
+      rows.push([e.d, e.k, e.t, e.a, e.c, Math.round(hk(e)), e.by==='me'?'JW':'西卡', M_SP[e.sp], M_PM[e.pm]||''].join('\t'));
+    });
+    copyText(rows.join('\n'), '表格複製好了，可以貼到試算表');
+  });
+  var clearBtn = document.getElementById('m-clear');
+  clearBtn.addEventListener('click', function(){
+    if (!book.items.length) { msg('本來就是空的'); return; }
+    if (!clearBtn.classList.contains('armed')) {
+      clearBtn.classList.add('armed'); clearBtn.textContent = '再按一次清空（無法復原）';
+      setTimeout(function(){ clearBtn.classList.remove('armed'); clearBtn.textContent = '清空所有記帳'; }, 3000);
+      return;
+    }
+    book.items.forEach(function(x){ if (book.del.indexOf(x.id) < 0) book.del.push(x.id); });
+    book.items = [];
+    mSave(M_KEY, book);
+    clearBtn.classList.remove('armed'); clearBtn.textContent = '清空所有記帳';
+    renderMoney(); msg('清空了');
+  });
+  renderMoney();
+
+  /* 倒數：10/23 08:00 台北時間 */
+  var target = new Date('2026-10-23T08:00:00+08:00').getTime();
+  var endTrip = new Date('2026-10-25T23:00:00+08:00').getTime();
+  function pad(n){ return (n<10?'0':'')+n; }
+  function tick(){
+    var now = Date.now(), diff = target - now;
+    var note = document.getElementById('cd-note');
+    if (now > endTrip){
+      document.getElementById('cd-d').textContent = '0'; document.getElementById('cd-h').textContent = '00'; document.getElementById('cd-m').textContent = '00';
+      note.textContent = '旅程已結束'; return;
+    }
+    if (diff <= 0){
+      document.getElementById('cd-d').textContent = '0'; document.getElementById('cd-h').textContent = '00'; document.getElementById('cd-m').textContent = '00';
+      note.textContent = '旅程進行中'; return;
+    }
+    var d = Math.floor(diff/86400000), h = Math.floor(diff%86400000/3600000), m = Math.floor(diff%3600000/60000);
+    document.getElementById('cd-d').textContent = d;
+    document.getElementById('cd-h').textContent = pad(h);
+    document.getElementById('cd-m').textContent = pad(m);
+    note.textContent = '距離 10/23 08:00 起飛';
+  }
+  tick(); setInterval(tick, 30000);
+
+  renderTabs(); renderDay(); renderTodo();
+})();
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("sw.js").then(null, function () {});
+  });
+}
+</script></body>
+</html>
