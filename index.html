@@ -161,6 +161,8 @@ section{padding-block:40px 8px}
 .ev p{font-size:14px;color:var(--ink-2);margin-top:4px}
 .ev .alt{margin-top:6px;font-size:13px;color:var(--ink);background:var(--soft);border-radius:8px;padding:4px 8px}
 .ev .alt b{color:var(--blue);font-weight:900}
+.ev .alt.pend{border:1.5px dashed var(--line)}
+.ev .alt.pend b{color:var(--red)}
 .ev .links{margin-top:6px;font-size:13px;font-weight:700}
 /* 備選口袋名單 */
 .opt-group{margin-bottom:16px}
@@ -760,7 +762,7 @@ rail:{'#f7943e':'M-90 -20 14 22 38 34 54 43 82 64 97 79 115 98M170 203 150 155 1
         {t:'08:30', who:'both', tr:'mtr', name:'觀塘 → 油麻地', p:'觀塘線直達約 20 分鐘，A2 出口。'},
         {t:'08:50', who:'both', tr:'walk', name:'嘉多娜麵包店', p:'油麻地碧街 54 號。布甸麵包外帶。', q:'嘉多娜麵包店 油麻地'},
         {t:'09:10', who:'both', tr:'walk', must:true, name:'澳洲牛奶公司', p:'佐敦白加士街 47 號，從碧街往南走 10 分鐘。炒蛋多士、燉奶，翻枱快。', q:'澳洲牛奶公司 佐敦', alt:'排太長：麥文記麵家、和順記。'},
-        {t:'10:15', who:'both', tr:'walk', name:'走到尖沙咀碼頭', p:'沿彌敦道往南約 20 分鐘，或佐敦坐一站到尖沙咀。'},
+        {t:'10:15', who:'both', tr:'walk', name:'走到尖沙咀碼頭', p:'沿彌敦道往南約 20 分鐘，或佐敦坐一站到尖沙咀。', pend:'順路到 Bakehouse 尖沙咀店（漢口道 44 號）先付錢訂蛋撻，19:40 到尖沙咀時回同一間店拿。'},
         {t:'10:45', who:'both', tr:'ferry', must:true, name:'天星小輪 尖沙咀 → 中環', p:'上層 HK$6.5，約 9 分鐘。', q:'天星碼頭 尖沙咀'},
         {t:'11:30', who:'both', tr:'walk', name:'沾仔記 雲吞麵', p:'中環威靈頓街 98 號。鮮蝦雲吞麵、鯪魚球。', q:'沾仔記 威靈頓街'},
         {t:'12:10', who:'both', tr:'walk', name:'中環街市 → 石板街 → 嘉咸街塗鴉牆', p:'都在沾仔記附近，走路連在一起，約 30 分鐘。', q:'中環街市'},
@@ -775,7 +777,7 @@ rail:{'#f7943e':'M-90 -20 14 22 38 34 54 43 82 64 97 79 115 98M170 203 150 155 1
         {t:'18:00', who:'both', tr:'mtr', name:'堅尼地城 → 油麻地', p:'港島線到中環轉荃灣線，約 30 分鐘，A2 出口。', alt:'太平山：中環交易廣場坐 15 號巴士，HK$12，約 40 分鐘。去的話信和要取消。'},
         {t:'18:35', who:'both', tr:'walk', must:true, name:'信和中心', p:'彌敦道 582–592 號，油麻地站走 3 分鐘。動漫、遊戲、模型、扭蛋。店多數 21:00–21:30 關，所以先來。', q:'信和中心 旺角', alt:'隔壁好景商業中心。'},
         {t:'19:25', who:'both', tr:'walk', name:'肥姐小食店', p:'登打士街 55 號 4A 舖，信和走 3 分鐘。墨魚、生腸、滷味串，只收現金。先墊一下，晚餐比較晚。', q:'肥姐小食店 旺角'},
-        {t:'19:40', who:'both', tr:'mtr', name:'油麻地 → 尖沙咀', p:'荃灣線兩站，往尖沙咀海濱走約 10 分鐘。19:55 前要到。'},
+        {t:'19:40', who:'both', tr:'mtr', name:'油麻地 → 尖沙咀', p:'荃灣線兩站，往尖沙咀海濱走約 10 分鐘。19:55 前要到。', pend:'早上有在 Bakehouse 尖沙咀店訂蛋撻的話，先去漢口道 44 號拿。'},
         {t:'20:00', who:'both', tr:'walk', must:true, name:'幻彩詠香江 燈光秀', p:'每晚 20:00，約 10 分鐘。尖沙咀海濱或星光大道看，對岸大樓的燈和雷射一起打。看完待一下看夜景。', q:'星光大道 尖沙咀', alt:'下雨或天氣不好可能取消，當天看旅發局公告。'},
         {t:'20:30', who:'both', tr:'walk', must:true, name:'廟街夜市', p:'荃灣線一站到佐敦，或沿彌敦道走 15 分鐘。廟街從佐敦往北走到油麻地，約 40 分鐘。', q:'廟街夜市', alt:'興記菜館煲仔飯在廟街。'},
         {t:'21:10', who:'both', tr:'walk', name:'廟街 → 登打士街', p:'從廟街北端往北走約 8 分鐘。'},
@@ -868,6 +870,7 @@ rail:{'#f7943e':'M-90 -20 14 22 38 34 54 43 82 64 97 79 115 98M170 203 150 155 1
           (it.must ? '<span class="tag must">必去</span>' : '')+
         '</div><h4>'+esc(it.name)+'</h4>'+
         (it.p ? '<p>'+esc(it.p)+'</p>' : '')+
+        (it.pend ? '<p class="alt pend"><b>待定</b> '+esc(it.pend)+'</p>' : '')+
         (it.alt ? '<p class="alt"><b>Plan B</b> '+esc(it.alt)+'</p>' : '')+
         (it.q ? '<div class="links"><a href="'+map(it.q)+'" target="_blank" rel="noopener">在 Google Maps 打開 ↗</a></div>' : '')+
         '</div></li>';
