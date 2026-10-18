@@ -342,6 +342,7 @@ footer .plate{font-size:15px}
       <a href="#days">行程</a>
       <a href="#money">記帳</a>
       <a href="#todo">清單</a>
+      <a href="#shop">購物</a>
       <a href="#stay">住宿</a>
       <a href="#list">主清單</a>
       <a href="#options">Plan B</a>
@@ -552,6 +553,18 @@ footer .plate{font-size:15px}
     </div>
     <ul class="todo" id="todolist"></ul>
     <div class="todo-foot"><span id="todo-count">0 / 0 完成</span><button type="button" id="todo-reset">全部清除</button></div>
+  </div>
+</section>
+
+<!-- 購物清單 -->
+<section id="shop">
+  <div class="wrap">
+    <div class="sec-head">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 14 H32 L30 34 H10Z" fill="#E8449A" stroke="#1E1A18" stroke-width="2.5" stroke-linejoin="round"/><path d="M14 14 V11 a6 6 0 0 1 12 0 V14" fill="none" stroke="#1E1A18" stroke-width="2.5"/></svg>
+      <div><div class="eyebrow">Shopping</div><h2>購物清單</h2></div>
+    </div>
+    <ul class="todo" id="shoplist"></ul>
+    <div class="todo-foot"><span id="shop-count">0 / 0 完成</span><button type="button" id="shop-reset">全部清除</button></div>
   </div>
 </section>
 
@@ -821,6 +834,12 @@ rail:{'#f7943e':'M-90 -20 14 22 38 34 54 43 82 64 97 79 115 98M170 203 150 155 1
     ['雨具', '十月底可能下雨']
   ];
 
+  var SHOP = [
+    ['蛋撻', 'Bakehouse：週六 13:15 士丹頓街，或早上尖沙咀店先訂（待定）。泰昌：週六 13:15 擺花街 35 號。'],
+    ['出前一丁', '惠康、百佳、759 阿信屋都有。週日在深水埗或回觀塘拿行李前買，不用一路提著。'],
+    ['GU 衣服', '旺角店：西洋菜南街 51 號友誠商業中心 1–2 樓，11:00–23:00，只有部分款式，週日吃完老馮順路。全系列：尖沙咀美麗華廣場一期 2 樓，週五、六開到 23:00，週六看完燈光秀往廟街會經過。']
+  ];
+
   var PLACES = [
     ['澳洲牛奶公司','必吃 六早','澳洲牛奶公司 佐敦'],
     ['再興燒臘飯店','必吃 六午','再興燒臘飯店 灣仔'],
@@ -892,31 +911,36 @@ rail:{'#f7943e':'M-90 -20 14 22 38 34 54 43 82 64 97 79 115 98M170 203 150 155 1
     state.who = b.dataset.who; renderDay();
   });
 
-  /* 待辦 */
-  var done = {};
-  try { done = JSON.parse(localStorage.getItem('hk-trip-todo')||'{}') || {}; } catch(e){ done = {}; }
-  function renderTodo(){
-    var ul = document.getElementById('todolist');
-    ul.innerHTML = TODO.map(function(t,i){
-      return '<li><label><input type="checkbox" id="todo-'+i+'" data-i="'+i+'"'+(done[i]?' checked':'')+'><span class="tx">'+esc(t[0])+'<span class="sub">'+esc(t[1])+'</span></span></label></li>';
-    }).join('');
-    countTodo();
+  /* 待辦、購物：打勾清單 */
+  function checklist(id, items, key){
+    var done = {};
+    try { done = JSON.parse(localStorage.getItem(key)||'{}') || {}; } catch(e){ done = {}; }
+    var ul = document.getElementById(id+'list');
+    function count(){
+      var n = items.filter(function(_,i){ return done[i]; }).length;
+      document.getElementById(id+'-count').textContent = n + ' / ' + items.length + ' 完成';
+    }
+    function render(){
+      ul.innerHTML = items.map(function(t,i){
+        return '<li><label><input type="checkbox" id="'+id+'-'+i+'" data-i="'+i+'"'+(done[i]?' checked':'')+'><span class="tx">'+esc(t[0])+'<span class="sub">'+esc(t[1])+'</span></span></label></li>';
+      }).join('');
+      count();
+    }
+    ul.addEventListener('change', function(e){
+      var cb = e.target; if (cb.type !== 'checkbox') return;
+      done[cb.dataset.i] = cb.checked;
+      try { localStorage.setItem(key, JSON.stringify(done)); } catch(e2){}
+      count();
+    });
+    document.getElementById(id+'-reset').addEventListener('click', function(){
+      done = {};
+      try { localStorage.removeItem(key); } catch(e){}
+      render();
+    });
+    return render;
   }
-  function countTodo(){
-    var n = TODO.filter(function(_,i){ return done[i]; }).length;
-    document.getElementById('todo-count').textContent = n + ' / ' + TODO.length + ' 完成';
-  }
-  document.getElementById('todolist').addEventListener('change', function(e){
-    var cb = e.target; if (cb.type !== 'checkbox') return;
-    done[cb.dataset.i] = cb.checked;
-    try { localStorage.setItem('hk-trip-todo', JSON.stringify(done)); } catch(e2){}
-    countTodo();
-  });
-  document.getElementById('todo-reset').addEventListener('click', function(){
-    done = {};
-    try { localStorage.removeItem('hk-trip-todo'); } catch(e){}
-    renderTodo();
-  });
+  var renderTodo = checklist('todo', TODO, 'hk-trip-todo');
+  var renderShop = checklist('shop', SHOP, 'hk-trip-shop');
 
   /* 店家 */
   document.getElementById('places').innerHTML = PLACES.map(function(p){
@@ -1309,7 +1333,7 @@ rail:{'#f7943e':'M-90 -20 14 22 38 34 54 43 82 64 97 79 115 98M170 203 150 155 1
   }
   tick(); setInterval(tick, 30000);
 
-  renderTabs(); renderDay(); renderTodo();
+  renderTabs(); renderDay(); renderTodo(); renderShop();
 })();
 </script>
 
